@@ -31,39 +31,17 @@ class encoder
 		String fileName = args[0];
 		
 		Trie mwTrie = new Trie();
-		//set up initial dictionary
-		mwTrie.buildDict(0,'a');
-		mwTrie.buildDict(1,'b');
-		mwTrie.buildDict(2,'c');
-		mwTrie.buildDict(3,'d');
-		mwTrie.buildDict(4,'e');
-		mwTrie.buildDict(5,'f');
-		mwTrie.buildDict(6,'g');
-		mwTrie.buildDict(7,'h');
-		mwTrie.buildDict(8,'i');
-		mwTrie.buildDict(9,'j');
-		mwTrie.buildDict(10,'k');
-		mwTrie.buildDict(11,'l');
-		mwTrie.buildDict(12,'m');
-		mwTrie.buildDict(13,'n');
-		mwTrie.buildDict(14,'o');
-		mwTrie.buildDict(15,'p');
-		mwTrie.buildDict(16,'q');
-		mwTrie.buildDict(17,'r');
-		mwTrie.buildDict(18,'s');
-		mwTrie.buildDict(19,'t');
-		mwTrie.buildDict(20,'u');
-		mwTrie.buildDict(21,'v');
-		mwTrie.buildDict(22,'w');
-		mwTrie.buildDict(23,'x');
-		mwTrie.buildDict(24,'y');
-		mwTrie.buildDict(25,'z');
-		mwTrie.buildDict(26,' ');
-		counter = 27;
-		temp = counter;
 		Node currentNode;
 		try
 		{
+			BufferedReader br = new BufferedReader(new FileReader("Dictionary.txt"));
+			while((line = br.readLine()) != null) 
+			{
+				char cha = line.charAt(0);
+				mwTrie.buildDict(counter,cha);
+				counter++;
+			}
+			
 			
 			FileInputStream in =  new FileInputStream(fileName);
 			FileOutputStream out = new FileOutputStream("output.txt");
