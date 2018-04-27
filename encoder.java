@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 
 class encoder
 {
+	int pathIndex = 0;
 	int counter;
 	int temp;
 	private String line;
@@ -75,23 +76,25 @@ class encoder
 					currPath[0] = k;
 					currPathIndex = 1;
 					//System.out.println(mwTrie.TRIE[currPath[0]].letter);
-					System.out.println("start Value: " + currPath[0]);
+					//System.out.println("start Value: " + currPath[0]);
 				}
 				//current path is not empty
 				else
 				{
 					
-					int pathIndex = 1;
+					pathIndex = 1;
 					//make the currentNode the beginning of the current run
+					System.out.println("1");
 					currentNode = mwTrie.TRIE[currPath[0]];
-					
+					System.out.println("2");
 					//while this point in currpath exists
 					while(currPath[pathIndex] != -1)
 					{
 						currentNode = currentNode.child[currPath[pathIndex]];
+						pathIndex++;
 					}
 					//currentNode points to the last point in run
-					
+					System.out.println("3");
 					//check through its children for a match
 					boolean found = false;
 					int x;
@@ -108,28 +111,31 @@ class encoder
 						}
 						
 					}
-					
+					System.out.println("4");
 					//if a match was found, add it to currpath
 					if(found)
 					{
 						System.out.println("Match Found");
-						currPath[currPathIndex] = y;
-						System.out.println("Current Y val: " + y);
 						int r = 0;
-						System.out.print("currPath: ");
-						while(currPath[r]!= -1)
+						while(currPath[r] != -1)
 						{
-							System.out.print(currPath[r] + " ");
 							r++;
 						}
-						System.out.println("");
+						currPath[r] = y;
+						for(int h = 0; h<currPath.length; h++)
+						{
+							//System.out.print(currPath[h] + " ");
+						}
+						//System.out.println("");
+
 					}
 					//if no match is found then a new character has been found, add it to the trie and reset currpath
 					else
 					{
-						System.out.println("current char: " + c);
+						//System.out.println("current char: " + c);
 						mwTrie.addNode(counter,c,currPath);
-						System.out.println("Added '" + c + "' at " + currPathIndex);
+						counter++;
+						//System.out.println("Added '" + c + "' at " + currPathIndex);
 						//reset currpath
 						for(int q = 0; q<currPath.length;q++)
 						{
@@ -145,6 +151,9 @@ class encoder
 				
 				
             }
+			System.out.println("");
+			System.out.println("");System.out.println("");System.out.println("");
+			mwTrie.printTrie();
 			in.close();
 			out.close();
 		}
@@ -187,48 +196,56 @@ class Trie
 	
 	public void addNode(int curr, char cha, int[] arr)
 	{
-		//loops through the array
-		Node currNode;
-		currNode = TRIE[arr[0]];
-		for(int i = 0; i < arr.length; i++)
+		try
 		{
-			if(arr[i] != -1)
+			Node currNode;
+			currNode = TRIE[arr[0]];
+			for(int i = 0; i < arr.length; i++)
 			{
-				if(i == 0)
+				if(arr[i] != -1)
 				{
-					//arr at point 0
-					currNode = TRIE[arr[i]];
+					if(i == 0)
+					{
+						//arr at point 0
+						currNode = TRIE[arr[i]];
+					}
+					else
+					{
+						currNode = currNode.child[arr[i]];
+						//arr at point i until arr is finished
+					}
 				}
-				else
+				
+			}
+			//currNode points to the final node in the given array
+			//now add a new node
+			int i = 0;
+
+			
+			//if the current node has children
+			if(currNode.child[0] != null)
+			{
+				while(currNode.child[i] != null)
 				{
-					currNode = currNode.child[arr[i]];
-					//arr at point i until arr is finished
+					i++;
 				}
+			}
+			else
+			{
+				i = -1;
 			}
 			
+			//now i is the final node in the child array of currNode
+			
+			i++;
+			currNode.child[i] = new Node(cha,curr);
 		}
-		//currNode points to the final node in the given array
-		//now add a new node
-		int i = 0;
-
-		
-		//if the current node has children
-		if(currNode.child[0] != null)
+		catch(Exception e)
 		{
-			while(currNode.child[i] != null)
-			{
-				i++;
-			}
+			System.out.println(e);
 		}
-		else
-		{
-			i = -1;
-		}
+		//loops through the array
 		
-		//now i is the final node in the child array of currNode
-		
-		i++;
-		currNode.child[i] = new Node(cha,curr);
 		//return 1;
 		
 	}
@@ -240,8 +257,23 @@ class Trie
 	
 	public void printTrie()
 	{
-	
+		int j;
+		for(int i = 0; i < TRIE.length; i++)
+		{
+			j = 0;
+			System.out.println(TRIE[i].letter + ": ");
+			while(TRIE[i].child[j] != null)
+			{
+				System.out.print(TRIE[i].child[j].letter + " ");
+				j++;
+			}
+			System.out.println("");
+		}
+		//System.out.println("");
+		
+		
 	}
+	
 	
 	public int[] checkChar(char c, int[] path)
 	{
