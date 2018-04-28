@@ -99,8 +99,10 @@ class encoder
 					boolean found = false;
 					int x;
 					int y = 0;
+					System.out.println("ernbvjefhnb");
 					for(x = 0; x< currentNode.child.length;x++)
 					{
+						System.out.println("HELLO");
 						if(currentNode.child[x] != null)
 						{
 							if(currentNode.child[x].letter == c)
@@ -134,12 +136,12 @@ class encoder
 					{
 						//System.out.println("current char: " + c);
 						mwTrie.addNode(counter,c,currPath);
-						counter++;
+						//counter++;
 						//System.out.println("Added '" + c + "' at " + currPathIndex);
 						//reset currpath
 						for(int q = 0; q<currPath.length;q++)
 						{
-							currPath[i] = -1;
+							currPath[q] = -1;
 						}
 						currPathIndex = 0;
 					}
