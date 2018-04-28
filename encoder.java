@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 class encoder
 {
 	int pathIndex = 0;
-	int counter;
+	int counter = 1;
 	int temp;
 	private String line;
 	int[] currPath = new int[150];
@@ -40,13 +40,15 @@ class encoder
 			{
 				char cha = line.charAt(0);
 				mwTrie.buildDict(counter,cha);
+				System.out.println(counter + "   " + cha);
 				counter++;
 			}
 			
 			
 			FileInputStream in =  new FileInputStream(fileName);
-			FileOutputStream out = new FileOutputStream("output.txt");
-			
+			//FileOutputStream out = new FileOutputStream("output.txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+
 			for(int i = 0; i<currPath.length;i++)
 			{
 				currPath[i] = -1;
@@ -57,6 +59,7 @@ class encoder
 			//loop until end of file reading in one char at a time
             while ((j = in.read()) != -1) 
 			{
+				
 				//get the character
 				c = (char)j;
 				int i = 0;
@@ -64,19 +67,23 @@ class encoder
 				//dont add new node here as will always be in current dict
 				if(currPath[0] == -1)
 				{
-					int k = 0;
+					
+					int k = 1;
 					//loop through dict until correct char is found
 					//add the index to the current path
 					while(mwTrie.TRIE[k].letter != c)
 					{
+						System.out.println("1");
 						//System.out.println(c);
 						k++;
 					}
 					//give the curr path the index of the value
+					
 					currPath[0] = k;
 					currPathIndex = 1;
 					//System.out.println(mwTrie.TRIE[currPath[0]].letter);
 					//System.out.println("start Value: " + currPath[0]);
+					
 				}
 				//current path is not empty
 				else
@@ -99,10 +106,10 @@ class encoder
 					boolean found = false;
 					int x;
 					int y = 0;
-					System.out.println("ernbvjefhnb");
+					//System.out.println("ernbvjefhnb");
 					for(x = 0; x< currentNode.child.length;x++)
 					{
-						System.out.println("HELLO");
+						//System.out.println("HELLO");
 						if(currentNode.child[x] != null)
 						{
 							if(currentNode.child[x].letter == c)
@@ -124,6 +131,7 @@ class encoder
 							r++;
 						}
 						currPath[r] = y;
+						currPathIndex = r;
 						for(int h = 0; h<currPath.length; h++)
 						{
 							//System.out.print(currPath[h] + " ");
@@ -136,8 +144,17 @@ class encoder
 					{
 						//System.out.println("current char: " + c);
 						mwTrie.addNode(counter,c,currPath);
-						//counter++;
-						//System.out.println("Added '" + c + "' at " + currPathIndex);
+						
+						System.out.println("Added '" + c + "' at " + counter);
+						counter++;
+						System.out.println("OUTPUT : " + currentNode.value);
+						int t = currentNode.value;
+						String s = Integer.toString(t);
+						writer.write(s + System.lineSeparator());
+						//currPathIndex--;
+						//System.out.println("OUTPUT : " + currPath[currPathIndex].value);
+						//print current output val
+						
 						//reset currpath
 						for(int q = 0; q<currPath.length;q++)
 						{
@@ -155,9 +172,10 @@ class encoder
             }
 			System.out.println("");
 			System.out.println("");System.out.println("");System.out.println("");
-			mwTrie.printTrie();
+			//mwTrie.printTrie();
 			in.close();
-			out.close();
+			//out.close();
+			writer.close();
 		}
 		catch(Exception e)
 		{
