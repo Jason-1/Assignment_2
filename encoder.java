@@ -15,6 +15,7 @@ class encoder
 	private String line;
 	int[] currPath = new int[150];
 	int currPathIndex = 0;
+	int y = -1;
 	public static void main(String[] args)
 	{
 		try
@@ -78,18 +79,12 @@ class encoder
 					//add the index to the current path
 					while(mwTrie.TRIE[k].letter != c)
 					{
-
-						////.out.println(c);
 						k++;
 					}
 					//give the curr path the index of the value
 					
 					currPath[0] = k;
 					currPathIndex = 1;
-					////.out.println(mwTrie.TRIE[currPath[0]].letter);
-					////.out.println("start Value: " + currPath[0]);
-					
-						//.out.println("");
 				}
 				//current path is not empty
 				else
@@ -106,13 +101,13 @@ class encoder
 						currentNode = currentNode.child[currPath[currPathIndex]];
 						currPathIndex++;
 					}
-					//.out.println("CURRENT LETTER FOR CURRENTNODE : " + currentNode.letter);
+
+					
 					//currentNode points to the last point in run
 
 					//check through its children for a match
 					boolean found = false;
 					int x;
-					int y = 0;
 
 					for(x = 0; x< currentNode.child.length;x++)
 					{
@@ -136,11 +131,14 @@ class encoder
 						{
 							r++;
 						}
-						currPath[r] = y;
-						currPathIndex = r;
+						if(y!= -1)
+						{
+							currPath[r] = y;
+							currPathIndex = r;
+							y = -1;
+						}
 						
-						
-						;
+
 
 					}
 					//if no match is found then a new character has been found, add it to the trie and reset currpath
@@ -154,13 +152,9 @@ class encoder
 						int t = currentNode.value;
 						String s = Integer.toString(t);
 						writer.write(s + System.lineSeparator());
-						////(s + "print char : " + c);
-						
-						
-						
 						
 						//reset currpath
-						for(int q = 0; q<currPath.length;q++)
+						for(int q = 0; q < currPath.length;q++)
 						{
 							currPath[q] = -1;
 						}
@@ -176,8 +170,11 @@ class encoder
 						{
 							k++;
 						}
+						
 						currPath[0] = k;
 						currPathIndex = 1;
+						
+						
 						
 					}
 
@@ -201,46 +198,7 @@ class encoder
 			int t = currentNode.value;
 					String s = Integer.toString(t);
 					writer.write(s + System.lineSeparator());
-			
-			
-			
-			
-					/*while(currPath[currPathIndex] != -1)
-					{
-						currentNode = currentNode.child[currPath[currPathIndex]];
-						currPathIndex++;
-					}
-					Node n = null;
-					int w = 0;
-					System.out.print("Sequence : ");
-					if(currPath[w] != -1)
-							{
-								if(w == 0)
-								{
-									n = mwTrie.TRIE[currPath[0] ];
-									System.out.print(" " + n.letter);
-								}
-								else
-								{
-									n = n.child[currPath[w]];
-									System.out.print(" " + n.letter);
-								}
-							}
-					//("");
-					int t = currentNode.value;
-					String s = Integer.toString(t);
-					writer.write(s + System.lineSeparator());
-					//(s);
-					//("#" + counter);*/
-					//writer.write("#" + counter + "#");
-					
-			////("Encoding successfully completed");
-			
-			////(Integer.toBinaryString(counter));
-			////(counter);
-			
-			
-			
+
 			in.close();
 			writer.close();
 		}
@@ -258,13 +216,14 @@ class Node
 	public char letter;		//letter the node holds
 	public int value;		//numerical value of the letter
 	public int MaxSize = 28;
+	public boolean exists;
 	public Node[]  child = new Node[MaxSize];
 	public Node[]  temp = new Node[MaxSize];
-	public Node(char Letter,int Value)
+	public Node(char Letter,int Value,boolean Exists)
 	{
 		letter = Letter;
 		value = Value;
-		
+		exists = Exists;
 	}
 	
 	
@@ -303,7 +262,7 @@ class Trie
 				TRIE[j] = TEMP[j];
 			}
 		}
-		TRIE[curr] = new Node(cha,curr);
+		TRIE[curr] = new Node(cha,curr,false);
 	}
 	
 	public void addNode(int curr, char cha, int[] arr)
@@ -368,7 +327,7 @@ class Trie
 					currNode.child[j] = currNode.temp[j];
 				}
 			}
-			currNode.child[i] = new Node(cha,curr);
+			currNode.child[i] = new Node(cha,curr,true);
 		}
 		catch(Exception e)
 		{
