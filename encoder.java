@@ -140,15 +140,7 @@ class encoder
 						currPathIndex = r;
 						
 						
-						System.out.println("");
-						for(int h = 0; h<currPath.length; h++)
-						{
-							if(h != 0){	System.out.print(currPath[h] + 1 + " "); }
-							else{ System.out.print(currPath[h] + " "); }
-							
-						}
-						System.out.println("");System.out.println("");
-						//.out.println("");
+						;
 
 					}
 					//if no match is found then a new character has been found, add it to the trie and reset currpath
@@ -162,43 +154,10 @@ class encoder
 						int t = currentNode.value;
 						String s = Integer.toString(t);
 						writer.write(s + System.lineSeparator());
-						//System.out.println(s + "print char : " + c);
-						Node n = null;
-						System.out.print("Sequence : ");
-
+						////(s + "print char : " + c);
 						
-						//System.out.println(s+":"+Integer.toBinaryString(t));
 						
-						for(int w = 0; w < currPath.length; w++)
-						{
-							
-							if(currPath[w] != -1)
-							{
-								if(w == 0)
-								{
-									n = mwTrie.TRIE[currPath[0] ];
-									System.out.print(" " + n.letter);
-								}
-								else
-								{
-									n = n.child[currPath[w]];
-									System.out.print(" " + n.letter);
-								}
-							}
-							
-							
-						}
 						
-						System.out.println("");
-						
-						System.out.println("");
-						for(int h = 0; h<currPath.length; h++)
-						{
-							if(h != 0){	System.out.print(currPath[h] + 1 + " "); }
-							else{ System.out.print(currPath[h] + " "); }
-							
-						}
-						System.out.println("");System.out.println("");
 						
 						//reset currpath
 						for(int q = 0; q<currPath.length;q++)
@@ -267,18 +226,18 @@ class encoder
 									System.out.print(" " + n.letter);
 								}
 							}
-					System.out.println("");
+					//("");
 					int t = currentNode.value;
 					String s = Integer.toString(t);
 					writer.write(s + System.lineSeparator());
-					System.out.println(s);
-					System.out.println("#" + counter);*/
+					//(s);
+					//("#" + counter);*/
 					//writer.write("#" + counter + "#");
 					
-			//System.out.println("Encoding successfully completed");
+			////("Encoding successfully completed");
 			
-			//System.out.println(Integer.toBinaryString(counter));
-			//System.out.println(counter);
+			////(Integer.toBinaryString(counter));
+			////(counter);
 			
 			
 			
