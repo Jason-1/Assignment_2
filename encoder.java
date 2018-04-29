@@ -311,6 +311,10 @@ class Trie
 			//now i is the final node in the child array of currNode
 			
 			i++;
+			if(i >=2)
+			{
+				i--;
+			}
 			if(i > currNode.MaxSize)
 			{
 				currNode.temp = new Node[currNode.MaxSize];
@@ -327,6 +331,7 @@ class Trie
 					currNode.child[j] = currNode.temp[j];
 				}
 			}
+			//System.out.println(i + " " + cha);
 			currNode.child[i] = new Node(cha,curr,true);
 		}
 		catch(Exception e)
