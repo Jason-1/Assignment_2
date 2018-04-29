@@ -226,8 +226,27 @@ class encoder
 				
 				
             }
-			//print last item in currPath
-					while(currPath[currPathIndex] != -1)
+
+			currPathIndex = 1;
+					//make the currentNode the beginning of the current run
+
+			currentNode = mwTrie.TRIE[currPath[0]];
+
+					//while this point in currpath exists
+			while(currPath[currPathIndex] != -1)
+			{
+				currentNode = currentNode.child[currPath[currPathIndex]];
+				currPathIndex++;
+			}
+			
+			int t = currentNode.value;
+					String s = Integer.toString(t);
+					writer.write(s + System.lineSeparator());
+			
+			
+			
+			
+					/*while(currPath[currPathIndex] != -1)
 					{
 						currentNode = currentNode.child[currPath[currPathIndex]];
 						currPathIndex++;
@@ -253,7 +272,7 @@ class encoder
 					String s = Integer.toString(t);
 					writer.write(s + System.lineSeparator());
 					System.out.println(s);
-					System.out.println("#" + counter);
+					System.out.println("#" + counter);*/
 					//writer.write("#" + counter + "#");
 					
 			//System.out.println("Encoding successfully completed");
@@ -274,16 +293,6 @@ class encoder
 
 }
 
-class Master
-{
-	public Node[] TRIE;
-	
-	public Master(int dictSize)
-	{
-		 TRIE = new Node[dictSize + 1];
-		
-	}
-}
 
 class Node
 {
@@ -313,10 +322,9 @@ class Trie
 	int temp;
 	String tempString;
 	
-	public Trie(int dictSize)
+	public Trie()
 	{
 
-		masterNode = new Master(dictSize)
 	}
 	//Builds the initial dictionary of all 26 numerical characters and a space
 	public void buildDict(int curr, char cha)
