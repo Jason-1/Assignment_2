@@ -197,7 +197,7 @@ class encoder
 			
 			int t = currentNode.value;
 					String s = Integer.toString(t);
-					writer.write(s + System.lineSeparator());
+					writer.write(s);
 
 			in.close();
 			writer.close();
